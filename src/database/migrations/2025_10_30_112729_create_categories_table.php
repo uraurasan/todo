@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class RenameTodoTableToTodos extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,11 @@ class RenameTodoTableToTodos extends Migration
      */
     public function up()
     {
-        DB::statement('RENAME TABLE todo TO todos');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 10)->unique();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +27,6 @@ class RenameTodoTableToTodos extends Migration
      */
     public function down()
     {
-        DB::statement('RENAME TABLE todos TO todo');
+        Schema::dropIfExists('categories');
     }
 }
